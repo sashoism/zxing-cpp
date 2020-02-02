@@ -76,7 +76,8 @@ PYBIND11_MODULE(zxing, m) {
 		.def_property_readonly("valid", &Result::isValid)
 		.def_property_readonly("text", &Result::text)
 		.def_property_readonly("format", &Result::format)
-		.def_property_readonly("points", &Result::resultPoints);
+		.def_property_readonly("points", &Result::resultPoints)
+		.def_property_readonly("orientation", &Result::orientation);
 	m.def("decode", (Result (*)(const Image&, std::vector<BarcodeFormat>, bool, bool, bool))&decode, "Decode a barcode from a numpy BGR or grayscale image array",
 		py::arg("image"),
 		py::arg("format")=std::vector<BarcodeFormat>({}),

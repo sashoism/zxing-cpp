@@ -328,10 +328,12 @@ Detector::Detect(const BinaryBitmap& image, bool multiple, Result& result)
 		return DecodeStatus::NotFound;
 	}
 
+	bool rotated180 = false;
 	auto barcodeCoordinates = DetectBarcode(*binImg, multiple);
 	if (barcodeCoordinates.empty()) {
 		auto newBits = std::make_shared<BitMatrix>(binImg->copy());
 		newBits->rotate180();
+		rotated180 = true;
 		binImg = newBits;
 		barcodeCoordinates = DetectBarcode(*binImg, multiple);
 	}
@@ -340,7 +342,7 @@ Detector::Detect(const BinaryBitmap& image, bool multiple, Result& result)
 	}
 	result.points = barcodeCoordinates;
 	result.bits = binImg;
-	return DecodeStatus::NoError;
+	return rotated180 ? DecodeStatus::Rotated180 : DecodeStatus::NoError;
 }
 
 } // Pdf417

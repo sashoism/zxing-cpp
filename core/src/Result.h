@@ -93,6 +93,10 @@ public:
 		return _metadata;
 	}
 
+	int orientation() const {
+		return _metadata.getInt(ResultMetadata::ORIENTATION);
+	}
+
 private:
 	DecodeStatus _status = DecodeStatus::NoError;
 	std::wstring _text;

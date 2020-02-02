@@ -19,6 +19,7 @@ namespace ZXing {
 
 enum class DecodeStatus
 {
+	Rotated180 = -180,
 	NoError = 0,
 	NotFound,
 	FormatError,
@@ -27,12 +28,12 @@ enum class DecodeStatus
 
 inline bool StatusIsOK(DecodeStatus status)
 {
-	return status == DecodeStatus::NoError;
+	return status <= DecodeStatus::NoError;
 }
 
 inline bool StatusIsError(DecodeStatus status)
 {
-	return status != DecodeStatus::NoError;
+	return status > DecodeStatus::NoError;
 }
 
 } // ZXing

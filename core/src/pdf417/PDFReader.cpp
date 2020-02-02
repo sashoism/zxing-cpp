@@ -78,6 +78,8 @@ DecodeStatus DoDecode(const BinaryBitmap& image, bool multiple, std::list<Result
 			std::vector<ResultPoint> foundPoints(points.size());
 			std::transform(points.begin(), points.end(), foundPoints.begin(), [](const Nullable<ResultPoint>& p) { return p.value(); });
 			Result result(std::move(decoderResult), std::move(foundPoints), BarcodeFormat::PDF_417);
+			if (status == DecodeStatus::Rotated180)
+				result.metadata().put(ResultMetadata::ORIENTATION, 180);
 			result.metadata().put(ResultMetadata::ERROR_CORRECTION_LEVEL, decoderResult.ecLevel());
 			if (auto extra = decoderResult.extra()) {
 				result.metadata().put(ResultMetadata::PDF417_EXTRA_METADATA, extra);
